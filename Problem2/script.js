@@ -42,8 +42,7 @@ window.onclick = function(event) {
     }
 }
 
-
-// ------------------- Exchange Rate Functionalities -------------------------//
+// ---- Exchange Rate Functionalities ---- //
 
 const exchangeRates = {
     'SOL-USD': 156.54 ,
@@ -68,13 +67,13 @@ function convertSellAmount() {
     if (sellCurrency && buyCurrency && amountToSell > 0) {
         if (sellCurrency === buyCurrency) {
             // If the sell and buy currencies are the same, just display the same amount
-            document.getElementById("output-amount").value = amountToSell.toFixed(2);
+            document.getElementById("output-amount").value = amountToSell.toFixed(6);
         } else {
             const rateKey = `${sellCurrency}-${buyCurrency}`;
             const rate = exchangeRates[rateKey];
             if (rate) {
                 const amountToBuy = amountToSell * rate;
-                document.getElementById("output-amount").value = amountToBuy.toFixed(2);
+                document.getElementById("output-amount").value = amountToBuy.toFixed(4);
             } else {
                 document.getElementById("output-amount").value = '';
             }
@@ -92,13 +91,13 @@ function convertBuyAmount() {
     if (sellCurrency && buyCurrency && amountToBuy > 0) {
         if (sellCurrency === buyCurrency) {
             // If the sell and buy currencies are the same, just display the same amount
-            document.getElementById("input-amount").value = amountToBuy.toFixed(2);
+            document.getElementById("input-amount").value = amountToBuy.toFixed(4);
         } else {
             const rateKey = `${buyCurrency}-${sellCurrency}`;
             const rate = exchangeRates[rateKey];
             if (rate) {
                 const amountToSell = amountToBuy * rate;
-                document.getElementById("input-amount").value = amountToSell.toFixed(2);
+                document.getElementById("input-amount").value = amountToSell.toFixed(4);
             } else {
                 document.getElementById("input-amount").value = '';
             }
