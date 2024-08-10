@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Currency Converter</title>
+    <link href="style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <!-- Overall arching container :) -->
+  <div class="container">
+    <h1>Currency Converter</h1>
+
+    <!-- The container for the 2 sections (Sell and Buy) -->
+    <form onsubmit="return !1;">
+      <div class="converter-container">
+
+        <!-- Sell Section -->
+        <div class="converter-card">
+          <div class="background-square sell-section">
+            <div class="form-group">
+              <label>Select a Token</label>
+              <div class="currency-selection">
+                <img id="sellCurrencyImage" src="images/Solid_grey.svg" alt="Currency" class="currency-image">
+                <input type="text" id="currency-options-sell" class="currency-options" placeholder="Please choose..." onclick="openSellModal()">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Amount to Sell</label>
+              <input type="number" min="0" placeholder="Enter amount" oninput="convertSellAmount()">
+            </div>
+          </div>
+        </div>
+        
+        <!-- The arrows in the middle -->
+        <div class="double-arrow">
+          <div class="arrow">→</div>
+          <div class="arrow">←</div>
+        </div>
+
+        <!-- Buy Section -->
+        <div class="converter-card">
+          <div class="background-square buy-section">
+            <div class="form-group">
+              <label>Select a Token</label>
+              <div class="currency-selection">
+                <img id="buyCurrencyImage" src="images/Solid_grey.svg" alt="Currency" class="currency-image">
+                <input type="text" id="currency-options-buy" class="currency-options" placeholder="Please choose..." onclick="openBuyModal()">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Amount to Buy</label>
+              <input type="number" min="0" placeholder="Enter amount" oninput="convertBuyAmount()">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    
+    <!-- Modal for Sell Currency -->
+    <div id="sellCurrencyModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeSellModal()">&times;</span>
+        <div class="currency-option" onclick="selectSellCurrency('SOL')">
+          <img src="images/SOL.svg" alt="SOL" class="currency-image"> SOL
+        </div>
+        <div class="currency-option" onclick="selectSellCurrency('USD')">
+          <img src="images/USD.svg" alt="USD" class="currency-image"> USD
+        </div>
+        <div class="currency-option" onclick="selectSellCurrency('ETH')">
+          <img src="images/ETH.svg" alt="ETH" class="currency-image"> ETH
+        </div>
+        <div class="currency-option" onclick="selectSellCurrency('LUNA')">
+          <img src="images/LUNA.svg" alt="LUNA" class="currency-image"> LUNA
+        </div>
+      </div>
+    </div>
+
+   <!-- Modal for Buy Currency -->
+   <div id="buyCurrencyModal" class="modal">
+     <div class="modal-content">
+         <span class="close" onclick="closeBuyModal()">&times;</span>
+         <div class="currency-option" onclick="selectBuyCurrency('SOL')">
+           <img src="images/SOL.svg" alt="SOL" class="currency-image"> SOL
+         </div>
+         <div class="currency-option" onclick="selectBuyCurrency('USD')">
+           <img src="images/USD.svg" alt="USD" class="currency-image"> USD
+         </div>
+         <div class="currency-option" onclick="selectBuyCurrency('ETH')">
+           <img src="images/ETH.svg" alt="ETH" class="currency-image"> ETH
+         </div>
+         <div class="currency-option" onclick="selectBuyCurrency('LUNA')">
+           <img src="images/LUNA.svg" alt="LUNA" class="currency-image"> LUNA
+         </div>
+     </div>
+   </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
