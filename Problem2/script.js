@@ -1,33 +1,27 @@
 // ---- Currency Modal Pop Up ---- //
 
-// Open Sell Modal
 function openSellModal() {
     document.getElementById("sellCurrencyModal").style.display = "flex";
 }
 
-// Close Sell Modal
 function closeSellModal() {
     document.getElementById("sellCurrencyModal").style.display = "none";
 }
 
-// Open Buy Modal
 function openBuyModal() {
     document.getElementById("buyCurrencyModal").style.display = "flex";
 }
 
-// Close Buy Modal
 function closeBuyModal() {
     document.getElementById("buyCurrencyModal").style.display = "none";
 }
 
-// Function to select a currency for selling
 function selectSellCurrency(currency) {
     document.getElementById("currency-options-sell").value = currency;
     document.getElementById("sellCurrencyImage").src = `images/${currency}.svg`;
     closeSellModal();
 }
 
-// Function to select a currency for buying
 function selectBuyCurrency(currency) {
     document.getElementById("currency-options-buy").value = currency;
     document.getElementById("buyCurrencyImage").src = `images/${currency}.svg`;
@@ -59,50 +53,49 @@ const exchangeRates = {
     'LUNA-ETH': 0.00012417
 };
 
-function convertSellAmount() {
+function convertCurrency(inputField) {
     const sellCurrency = document.getElementById("currency-options-sell").value;
     const buyCurrency = document.getElementById("currency-options-buy").value;
-    const amountToSell = parseFloat(document.getElementById("input-amount").value);
+    let sellAmount = parseFloat(document.getElementById("input-amount").value);
+    let buyAmount = parseFloat(document.getElementById("output-amount").value);
 
-    if (sellCurrency && buyCurrency && amountToSell > 0) {
+    if (sellCurrency && buyCurrency) {
         if (sellCurrency === buyCurrency) {
             // If the sell and buy currencies are the same, just display the same amount
-            document.getElementById("output-amount").value = amountToSell.toFixed(6);
+            if (inputField === 'input-amount' && sellAmount > 0) {
+                document.getElementById("output-amount").value = sellAmount.toFixed(4);
+            } else if (inputField === 'output-amount' && buyAmount > 0) {
+                document.getElementById("input-amount").value = buyAmount.toFixed(4);
+            }
         } else {
-            const rateKey = `${sellCurrency}-${buyCurrency}`;
-            const rate = exchangeRates[rateKey];
-            if (rate) {
-                const amountToBuy = amountToSell * rate;
-                document.getElementById("output-amount").value = amountToBuy.toFixed(4);
-            } else {
-                document.getElementById("output-amount").value = '';
+            // input amounts 
+            if (inputField === 'input-amount' && sellAmount > 0) {
+                const rateKey = `${sellCurrency}-${buyCurrency}`;
+                const rate = exchangeRates[rateKey];
+                if (rate) {
+                    buyAmount = sellAmount * rate;
+                    document.getElementById("output-amount").value = buyAmount.toFixed(4);
+                } else {
+                    document.getElementById("output-amount").value = '';
+                }
+            // output amounts   
+            } else if (inputField === 'output-amount' && buyAmount > 0) {
+                const rateKey = `${buyCurrency}-${sellCurrency}`;
+                const rate = exchangeRates[rateKey];
+                if (rate) {
+                    sellAmount = buyAmount * rate;
+                    document.getElementById("input-amount").value = sellAmount.toFixed(4);
+                } else {
+                    document.getElementById("input-amount").value = '';
+                }
             }
         }
     } else {
-        document.getElementById("output-amount").value = '';
-    }
-}
-
-function convertBuyAmount() {
-    const sellCurrency = document.getElementById("currency-options-sell").value;
-    const buyCurrency = document.getElementById("currency-options-buy").value;
-    const amountToBuy = parseFloat(document.getElementById("output-amount").value);
-
-    if (sellCurrency && buyCurrency && amountToBuy > 0) {
-        if (sellCurrency === buyCurrency) {
-            // If the sell and buy currencies are the same, just display the same amount
-            document.getElementById("input-amount").value = amountToBuy.toFixed(4);
-        } else {
-            const rateKey = `${buyCurrency}-${sellCurrency}`;
-            const rate = exchangeRates[rateKey];
-            if (rate) {
-                const amountToSell = amountToBuy * rate;
-                document.getElementById("input-amount").value = amountToSell.toFixed(4);
-            } else {
-                document.getElementById("input-amount").value = '';
-            }
+        // Clear both fields if currencies are not selected
+        if (inputField === 'input-amount') {
+            document.getElementById("output-amount").value = '';
+        } else if (inputField === 'output-amount') {
+            document.getElementById("input-amount").value = '';
         }
-    } else {
-        document.getElementById("input-amount").value = '';
     }
 }
